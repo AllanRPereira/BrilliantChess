@@ -7,6 +7,20 @@ import chess
 import chess.engine
 import chess.pgn
 import json
+import redis
+import time
+
+# Realiza a conexão com o Redis - Gerenciador de Filas de Análises 
+try:
+    r = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+    r.ping()
+except redis.exceptions.ConnectionError as e:
+    exit(1)
+
+FILA_ANALISE = "analises"
+PREFIXO_ANALISE = "analise:"
+
+# ---------------- Sistema de Análise ------------------------------------
 
 def gerar_palavra():
     return ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
@@ -44,15 +58,31 @@ async def engine_analyse(pgn) -> list:
         board.push(move)
 
     await engine.quit()
-    moves_quality = evaluation_quality(evaluation_moves)
-    save_analyse(moves_quality)
-    return True
+    return evaluation_quality(evaluation_moves)
 
 
 def run():
-    with open("game.pgn", "r") as game:
-        data = game.read()
-    asyncio.run(engine_analyse(data))
+    id_tarefa = ""
+    chave_tarefa = ""
+
+    while True:
+        try:
+            id_tarefa = r.blpop(FILA_ANALISE, timeout=0)[1]
+            chave_tarefa = f"{PREFIXO_ANALISE}{id_tarefa}"
+
+            r.hset(chave_tarefa, "status", "Em análise")
+            r.hset(chave_tarefa, "iniciado_em", time.time())
+
+            pgn_partida = r.hget(chave_tarefa, "partida")
+            resultado_analise = asyncio.run(engine_analyse(pgn_partida))
+
+            r.hset(chave_tarefa, "status", "Concluída")
+            r.hset(chave_tarefa, "analise", json.dumps(resultado_analise))
+            r.hset(chave_tarefa, "finalizado_em", time.time())
+        
+        except Exception as error:
+            r.hset(chave_tarefa, "status", "Falha")
+            r.hset(chave_tarefa, "message", str(error))
 
 if __name__ == "__main__":
     run()
