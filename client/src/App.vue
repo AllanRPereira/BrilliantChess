@@ -4,24 +4,24 @@ import ChessReview from './components/ChessReview.vue';
 
 <template>
   <main>
-    <h1>Análise de Partida de Xadrez</h1>
-    <ChessReview />
+    <h1> Welcome to Brilliant Chess </h1>
   </main>
 </template>
 
+
 <style>
-/* Estilos globais básicos */
-body {
+body{
   font-family: sans-serif;
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: aliceblue;
+  color: aqua;
 }
-main {
+
+main{
   max-width: 900px;
   margin: 2rem auto;
   padding: 1rem;
 }
-h1 {
+h1{
   text-align: center;
 }
 </style>
