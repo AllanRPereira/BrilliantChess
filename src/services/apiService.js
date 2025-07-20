@@ -4,10 +4,10 @@ import { ref } from 'vue';
 
 //dados exemplos, na implementação virão de um banco de dados.
 const mockGames = ref([
-  { id: 1, nome: 'Vitória Clássica vs. Magnus', data: '2025-07-18' },
-  { id: 2, nome: 'Abertura Siciliana Fulminante', data: '2025-07-17' },
-  { id: 3, nome: 'Defesa Francesa - Partida de Estudo', data: '2025-07-16' },
-  { id: 4, nome: 'Gambito da Dama Recusado', data: '2025-07-15' },
+  { id: 1, nome: 'Vitória do allan vs Magnus Carlsen', data: '2025-07-18' },
+  { id: 2, nome: 'Gambito secreto máximo', data: '2025-07-17' },
+  { id: 3, nome: 'Foschiera lindo', data: '2025-07-16' },
+  { id: 4, nome: 'partida exemplo 4', data: '2025-07-15' },
 ]);
 
 // Simula a busca de todas as partidas

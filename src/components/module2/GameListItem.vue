@@ -31,38 +31,55 @@ const emit = defineEmits(['ver-analise', 'apagar']);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.2s;
+  padding: 1.5rem; /* Aumenta o padding para mais respiro */
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  margin-bottom: 1rem; /* Espaçamento entre os itens */
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .game-item:hover {
-  background-color: #f9f9f9;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
+
 .info {
   display: flex;
   flex-direction: column;
 }
+
 .nome {
-  font-weight: bold;
-  font-size: 1.1em;
+  font-weight: 600; /* Um pouco mais de peso */
+  font-size: 1.2rem;
+  color: var(--cor-texto-principal);
 }
+
 .data {
-  font-size: 0.9em;
-  color: #666;
+  font-size: 0.9rem;
+  color: var(--cor-texto-secundario);
 }
+
 .actions button {
   margin-left: 10px;
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  cursor: pointer;
 }
-.delete-btn {
-  background-color: #e74c3c;
+
+.actions button:first-child {
+  background-color: var(--cor-primaria);
   color: white;
-  border-color: #c0392b;
 }
+
+.actions button:first-child:hover {
+  background-color: var(--cor-primaria-hover);
+}
+
+.delete-btn {
+  background-color: var(--cor-perigo);
+  color: white;
+}
+
 .delete-btn:hover {
-  background-color: #c0392b;
+  background-color: var(--cor-perigo-hover);
 }
 </style>

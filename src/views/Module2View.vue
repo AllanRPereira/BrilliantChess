@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchGames } from '../services/apiService.js';
-import GameList from '../components/module2/GmeList.vue';
-import{ deleteGame } from '../services/apiService.js; //importa a função deletar
+import GameList from '../components/module2/GameList.vue';
+import{ deleteGame } from '../services/apiService.js'; //importa a função deletar
 import { computed } from 'vue'; // Importe o 'computed' para a reatividade.
 import { useRouter } from 'vue-router'; // Importe o router para a navegação.
 import SearchBar from '../components/module2/SearchBar.vue';
@@ -83,7 +83,7 @@ const handleVerAnalise = (partidaId) => {
 <template>
   <div class="module-container">
     <h1>Minhas Análises de Partidas</h1>
-    
+
     <div v-if="carregando" class="feedback-container">
       <p>Carregando partidas...</p>
     </div>
@@ -93,12 +93,16 @@ const handleVerAnalise = (partidaId) => {
     </div>
 
     <div v-else class="content-container">
-      <p>Conteúdo do Módulo 2 aparecerá aqui.</p>
-    </div>
-  </div>
-</template>
+      <SearchBar v-model="termoBusca" />
 
-<style scoped>
+      <GameList 
+        :partidas="partidasFiltradas"
+        @apagar="handleApagar"
+        @ver-analise="handleVerAnalise"
+      />
+    </div>
+  </div> </template>
+
 .module-container {
   max-width: 800px;
   margin: auto;
@@ -117,23 +121,3 @@ const handleVerAnalise = (partidaId) => {
   padding: 20px;
   color: #666;
 }
-</style>
-
-</script>
-
-<GameList 
-  :partidas="partidas"
-  @apagar="handleApagar"
-  @ver-analise="handleVerAnalise"
-/>
-
-</script>
-
-<div v-else class="content-container">
-  <SearchBar v-model="termoBusca" />
-
-  <GameList 
-    :partidas="partidasFiltradas" @apagar="handleApagar"
-    @ver-analise="handleVerAnalise"
-  />
-</div>

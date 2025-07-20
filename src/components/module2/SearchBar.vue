@@ -24,11 +24,19 @@ const onInput = (event) => {
 <style scoped>
 .search-container input {
   width: 100%;
-  padding: 12px;
-  font-size: 1em;
-  margin-bottom: 20px;
-  box-sizing: border-box; /* Garante que padding não afete a largura total */
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  margin-bottom: 2rem; /* Aumenta o espaçamento inferior */
+  box-sizing: border-box;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Efeito visual quando o usuário clica no campo de busca */
+.search-container input:focus {
+  outline: none;
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 </style>

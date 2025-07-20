@@ -1,35 +1,69 @@
-@import './base.css';
+/* === DESIGN SYSTEM === */
+/*
+  Usamos variáveis CSS (:root) para definir nossa paleta de cores e fontes.
+  Isso torna a manutenção e futuras alterações de design muito mais fáceis.
+*/
+:root {
+  /* Paleta de Cores */
+  --cor-primaria: #007bff; /* Azul para ações principais e links */
+  --cor-primaria-hover: #0056b3;
+  --cor-perigo: #dc3545; /* Vermelho para ações de exclusão */
+  --cor-perigo-hover: #c82333;
+  --cor-fundo: #f8f9fa; /* Cinza muito claro para o fundo da página */
+  --cor-superficie: #ffffff; /* Branco para cards e contêineres */
+  --cor-borda: #dee2e6;
+  --cor-texto-principal: #212529;
+  --cor-texto-secundario: #6c757d;
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  /* Tipografia */
+  --fonte-principal: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  
+  /* Sombreamento e Bordas */
+  --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --raio-borda: 8px; /* Bordas arredondadas */
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+/* === ESTILOS GLOBAIS === */
+/*
+  Reset básico e configuração do box-sizing para um controle de layout mais intuitivo.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+/* Estilos aplicados ao corpo da página */
+body {
+  font-family: var(--fonte-principal);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-principal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+/* Estilos para os títulos */
+h1, h2, h3 {
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+h1 {
+  font-size: 2.5rem;
+  color: var(--cor-texto-principal);
+}
+
+/* Estilos para botões genéricos */
+button {
+  cursor: pointer;
+  font-family: var(--fonte-principal);
+  border-radius: var(--raio-borda);
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
 }
