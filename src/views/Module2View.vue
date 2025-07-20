@@ -2,35 +2,33 @@
 import { ref, onMounted } from 'vue';
 import { fetchGames } from '../services/apiService.js';
 
-//armazena os dados e o estado da interface.
+//armazena os dados e o estado da interface
 const partidas = ref([]); // Armazena a lista de partidas vinda da API.
 const carregando = ref(true); // Indica se estamos esperando a resposta da API.
 const erro = ref(null); // Armazena mensagens de erro, se houver.
 
-// A função onMounted é executada automaticamente quando o componente é criado.
+// A função onMounted é um gancho do Vue que executa o código
 onMounted(async () => {
   try {
-    // Chama nossa função de API
+    // Chama nossa função de API simulada para buscar os dados.
     const dadosRecebidos = await fetchGames();
     partidas.value = dadosRecebidos;
   } catch (e) {
-    // Em caso de erro na "API", aparece a mensagem.
+    // Em caso de erro na API, aparece a mensagem
     erro.value = 'Falha ao carregar as partidas. Tente novamente mais tarde.';
     console.error(e);
   } finally {
-    // termina o carregamento
+    //o carregamento termina.
     carregando.value = false;
   }
 });
-
-// o template mostra o carregamento ou erro.
 </script>
 
 <template>
   <div class="module-container">
     <h1>Minhas Análises de Partidas</h1>
     
-    <div v-if="carregando">
+    <div v-if="carregando" class="feedback-container">
       <p>Carregando partidas...</p>
     </div>
     
@@ -38,8 +36,9 @@ onMounted(async () => {
       <p>{{ erro }}</p>
     </div>
 
-    <div v-else>
-      </div>
+    <div v-else class="content-container">
+      <p>Conteúdo do Módulo 2 aparecerá aqui.</p>
+    </div>
   </div>
 </template>
 
@@ -52,5 +51,14 @@ onMounted(async () => {
 }
 .error-message {
   color: red;
+  background-color: #ffdddd;
+  border: 1px solid red;
+  padding: 10px;
+  border-radius: 5px;
+}
+.feedback-container {
+  text-align: center;
+  padding: 20px;
+  color: #666;
 }
 </style>
