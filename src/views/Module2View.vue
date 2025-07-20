@@ -3,12 +3,17 @@ import { ref, onMounted } from 'vue';
 import { fetchGames } from '../services/apiService.js';
 import GameList from '../components/module2/GmeList.vue';
 import{ deleteGame } from '../services/apiService.js; //importa a função deletar
+import { computed } from 'vue'; // Importe o 'computed' para a reatividade.
+import { useRouter } from 'vue-router'; // Importe o router para a navegação.
+import SearchBar from '../components/module2/SearchBar.vue';
 
 
 //armazena os dados e o estado da interface
 const partidas = ref([]); // Armazena a lista de partidas vinda da API.
 const carregando = ref(true); // Indica se estamos esperando a resposta da API.
 const erro = ref(null); // Armazena mensagens de erro, se houver.
+const router = useRouter();
+const termoBusca = ref('');
 
 // A função onMounted é um gancho do Vue que executa o código
 onMounted(async () => {
@@ -44,6 +49,34 @@ const handleApagar = async (partidaId) => {
     console.error(error);
   }
 };
+
+
+// --- LÓGICA ---
+// ... onMounted
+
+//a função recalcula seu valor automaticamente sempre que uma dependencia muda
+const partidasFiltradas = computed(() => {
+  // Se a busca estiver vazia, retorna a lista completa
+  if (!termoBusca.value) {
+    return partidas.value;
+  }
+  // Se não, filtra a lista de partidas
+  return partidas.value.filter(partida =>
+    // Converte ambos os textos para minúsculas
+    partida.nome.toLowerCase().includes(termoBusca.value.toLowerCase())
+  );
+});
+
+// ... handleApagar
+
+// Atualiza a função para usar o router.
+const handleVerAnalise = (partidaId) => {
+  console.log(`Navegando para /partidas/${partidaId}`);
+  // Usa o router para navegar para a página de detalhes da partida.
+  router.push(`/partidas/${partidaId}`);
+};
+
+
 
 </script>
 
@@ -93,3 +126,14 @@ const handleApagar = async (partidaId) => {
   @apagar="handleApagar"
   @ver-analise="handleVerAnalise"
 />
+
+</script>
+
+<div v-else class="content-container">
+  <SearchBar v-model="termoBusca" />
+
+  <GameList 
+    :partidas="partidasFiltradas" @apagar="handleApagar"
+    @ver-analise="handleVerAnalise"
+  />
+</div>
