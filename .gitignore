@@ -207,7 +207,8 @@ marimo/_lsp/
 __marimo__/
 
 # Engine Stockfish
-backend/analyzer/engine
+backend/api/engine
+backend/api/*.rdb
 
 .*
 *partidas_analisadas*
