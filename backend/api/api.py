@@ -71,15 +71,15 @@ def engine_status():
 @app.get("/get-all")
 async def get_all():
     try:
-        tarefas = await r.lrange(FILA_ANALISE, 0, -1)
-        if not tarefas:
-            return {"Msg": []}
-
+        cursor = 0
         data = []
-        for id_tarefa in tarefas:
-            chave_tarefa = f"{PREFIXO_ANALISE}{id_tarefa}"
-            tarefa_data = await r.hgetall(chave_tarefa)
-            data.append(tarefa_data)
+        while True:
+            cursor, keys = await r.scan(cursor=cursor, match=f"{PREFIXO_ANALISE}*")
+            for chave_tarefa in keys:
+                tarefa_data = await r.hgetall(chave_tarefa)
+                data.append(tarefa_data)
+            if cursor == 0:
+                break
         return {"Msg": data}
     except Exception as e:
         return {"error": f"Erro ao buscar dados: {str(e)}"}
