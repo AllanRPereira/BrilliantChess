@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchGames } from '../services/apiService.js';
+import GameList from '../components/module2/GmeList.vue';
+import{ deleteGame } from '../services/apiService.js; //importa a função deletar
+
 
 //armazena os dados e o estado da interface
 const partidas = ref([]); // Armazena a lista de partidas vinda da API.
@@ -22,6 +25,26 @@ onMounted(async () => {
     carregando.value = false;
   }
 });
+
+
+// função para lida com a exclusão
+const handleApagar = async (partidaId) => {
+  // Pede confirmação do usuário antes de deletar
+  if (!confirm('Tem certeza que deseja apagar esta análise? A ação não pode ser desfeita.')) {
+    return;
+  }
+  
+  try {
+    // Chama a função da API simulada para deletar.
+    await deleteGame(partidaId);
+    partidas.value = partidas.value.filter(p => p.id !== partidaId);
+  } catch (error) {
+    // Em caso de erro, avisa
+    alert('Erro ao apagar a partida. Tente novamente.');
+    console.error(error);
+  }
+};
+
 </script>
 
 <template>
@@ -62,3 +85,11 @@ onMounted(async () => {
   color: #666;
 }
 </style>
+
+</script>
+
+<GameList 
+  :partidas="partidas"
+  @apagar="handleApagar"
+  @ver-analise="handleVerAnalise"
+/>
