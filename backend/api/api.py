@@ -5,6 +5,7 @@ import redis
 try:
     r = redis.Redis(host="127.0.0.1", port=6379, db=0, decode_responses=True)
     r.ping()
+    print("Conexão com Redis foi realizada!")
 except redis.exceptions.ConnectionError as e:
     exit(1)
 
@@ -24,6 +25,7 @@ def get_all():
         return {"Msg" : tarefas}
 
     data = []
-    for tarefa in tarefas:
-        data.append(tarefa.get("id"))
+    for id_tarefa in tarefas:
+        chave_tarefa = f"{PREFIXO_ANALISE}{id_tarefa}"
+        data.append(r.hgetall(chave_tarefa))
     return {"Msg" : data}
