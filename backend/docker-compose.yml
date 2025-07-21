@@ -1,0 +1,18 @@
+services:
+  redis:
+    image: "redis:7-alpine"
+    hostname: redis
+    ports:
+      - "6379:6379"
+
+  engine:
+    build: analyzer
+    hostname: engine
+    command: python app/engine.py
+    depends_on:
+      - redis
+    
+  api:
+    build: api
+    hostname: api
+    command: python app/api.py
