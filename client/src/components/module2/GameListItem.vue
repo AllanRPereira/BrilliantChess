@@ -33,7 +33,7 @@ const emit = defineEmits(['ver-analise', 'apagar']);
   align-items: center;
   padding: 1.5rem; /* Aumenta o padding para mais respiro */
   background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
+  border: 1px solid #2a222c;
   border-radius: var(--raio-borda);
   margin-bottom: 1rem; /* Espaçamento entre os itens */
   box-shadow: var(--sombra-suave);
@@ -57,7 +57,7 @@ const emit = defineEmits(['ver-analise', 'apagar']);
 }
 
 .data {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--cor-texto-secundario);
 }
 
@@ -66,8 +66,8 @@ const emit = defineEmits(['ver-analise', 'apagar']);
 }
 
 .actions button:first-child {
-  background-color: var(--cor-primaria);
-  color: white;
+  background-color: #0accac;
+  color: rgb(250, 248, 247);
 }
 
 .actions button:first-child:hover {
@@ -75,7 +75,7 @@ const emit = defineEmits(['ver-analise', 'apagar']);
 }
 
 .delete-btn {
-  background-color: var(--cor-perigo);
+  background-color: #e94747;
   color: white;
 }
 

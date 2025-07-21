@@ -101,7 +101,10 @@ const handleVerAnalise = (partidaId) => {
         @ver-analise="handleVerAnalise"
       />
     </div>
-  </div> </template>
+  </div> 
+</template>
+
+<style>
 
 .module-container {
   max-width: 800px;
@@ -121,3 +124,8 @@ const handleVerAnalise = (partidaId) => {
   padding: 20px;
   color: #666;
 }
+
+.content-container {
+  color: #9c3434;
+}
+</style>

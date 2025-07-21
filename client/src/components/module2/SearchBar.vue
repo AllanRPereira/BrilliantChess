@@ -23,12 +23,14 @@ const onInput = (event) => {
 
 <style scoped>
 .search-container input {
+  background-color:#382F3A;
+  color: #9DD8B0;
   width: 100%;
   padding: 12px 15px;
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-bottom: 2rem; /* Aumenta o espaçamento inferior */
   box-sizing: border-box;
-  border: 1px solid var(--cor-borda);
+  border: 2px solid #2a222c;
   border-radius: var(--raio-borda);
   transition: border-color 0.2s, box-shadow 0.2s;
 }

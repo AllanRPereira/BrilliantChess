@@ -30,7 +30,7 @@ function reset() {
   margin-top: 1rem;
 }
 button {
-  color: #A772A7;
+  color: #e4b8e4;
   font-weight: 400;
   padding: 8px 16px;
   font-size: 1.3rem;
@@ -46,7 +46,7 @@ button:hover {
 .reset-button {
   background-color: #312433;
   border-color: #A772A7;
-  color: #A772A7;
+  color: #e4b8e4;
 }
 .reset-button:hover {
   background-color: #462b4b;

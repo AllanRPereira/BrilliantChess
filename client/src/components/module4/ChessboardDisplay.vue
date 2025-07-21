@@ -40,6 +40,6 @@ function onBoardCreated(api) {
 .board-wrapper {
   width: 800px;
   max-width: 100%;
-  margin: 5px;
+  ;
 }
 </style>

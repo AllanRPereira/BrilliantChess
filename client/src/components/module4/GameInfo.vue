@@ -33,7 +33,7 @@ defineProps({
   pointer-events: none;
   margin: 0;
   font-size: 1.7em;
-  color: #D6B8DA;
+  color: #9FDBB3;
 }
 
 .game-status {
@@ -41,6 +41,6 @@ defineProps({
   margin: 5px 0 0;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #D6B8DA;
+  color: #9FDBB3;
 }
 </style>

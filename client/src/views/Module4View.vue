@@ -180,11 +180,12 @@ function goBack() { // Volta p/ a pagina anterior
 }
 
 .returnMenu {
+  font-size: 1.3rem;
   position: absolute;
-  left: 1rem;
+  left: 0.1rem;
   margin-right: 20px;
   border: 3px solid #A772A7;
-  color: #A772A7;
+  color: #A1E0B6;
   background-color: #312433;
 }
 .returnMenu:hover {
