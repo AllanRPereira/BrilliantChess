@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, watchEffect } from 'vue'; // 1. Adicione watchEffect
 import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 // ... outras importações ...
 import TheChessboard from '../components/module4/ChessboardDisplay.vue';
 import GameInfo from '../components/module4/GameInfo.vue';
@@ -11,6 +12,7 @@ import EvaluationBar from '@/components/module4/EvaluationBar.vue';
 
 // --- ESTADO ---
 const route = useRoute();
+const router = useRouter();
 const partida = ref(null);
 const activeMoveIndex = ref(-1);
 const boardAPI = ref(null); // A referência para a API do tabuleiro
@@ -82,6 +84,10 @@ function resetGame() {
 function handleBoardMove(move) {
     activeMoveIndex.value = boardAPI.value.getCurrentPlyNumber() - 1;
 }
+
+function goBack() { // Volta p/ a pagina anterior
+  router.push('/partidas');
+}
 </script>
 
 <template>
@@ -89,7 +95,10 @@ function handleBoardMove(move) {
     <p>Carregando análise da partida...</p>
   </div>
   <div v-else class="page-container">
-    <GameInfo :nome="partida.nome" :status="gameStatus" />
+    <div class="header">
+      <button class="returnMenu" @click="goBack"> Retornar</button>
+      <GameInfo :nome="partida.nome" :status="gameStatus" />
+    </div>
     <div class="main-layout">
       <div class="board-block">
         <div class="board-area">
@@ -118,7 +127,7 @@ function handleBoardMove(move) {
 
 <style scoped>
 .page-container {
-  background-color: rgb(215, 228, 169);
+
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -152,5 +161,21 @@ function handleBoardMove(move) {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: 100%;
+  position: relative;
+}
+
+.returnMenu {
+  position: absolute;
+  left: 1rem;
+  margin-right: 20px;
+
 }
 </style>
