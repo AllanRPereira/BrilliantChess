@@ -126,9 +126,16 @@ function goBack() { // Volta p/ a pagina anterior
 </template>
 
 <style scoped>
-.page-container {
+.body{
+  background-color: rgb(161, 117, 58);
+}
 
-  padding: 1rem;
+.page-container {
+  border: 3px solid #A772A7;
+  background-color: #312433;
+  padding-right: 3rem;
+  padding-left: 3rem;
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center; 
@@ -176,6 +183,11 @@ function goBack() { // Volta p/ a pagina anterior
   position: absolute;
   left: 1rem;
   margin-right: 20px;
-
+  border: 3px solid #A772A7;
+  color: #A772A7;
+  background-color: #312433;
+}
+.returnMenu:hover {
+  background-color: #462b4b;
 }
 </style>

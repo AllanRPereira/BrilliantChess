@@ -1,10 +1,10 @@
 <template>
   <div class="game-controls">
-    <button @click="navigate('first')">⏮️ Início</button>
+    <button @click="navigate('first')">⏮ Início</button>
     <button @click="navigate('prev')"> << </button>
     <button @click="navigate('next')"> >> </button>
-    <button @click="navigate('last')">Fim ⏭️</button>
-    <button class="reset-button" @click="reset">🔄 Reiniciar</button>
+    <button @click="navigate('last')">Fim ⏭</button>
+    <button class="reset-button" @click="reset"> Reiniciar</button>
   </div>
 </template>
 
@@ -30,23 +30,25 @@ function reset() {
   margin-top: 1rem;
 }
 button {
+  color: #A772A7;
+  font-weight: 400;
   padding: 8px 16px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  font-size: 1.3rem;
+  border: 3px solid #A772A7;
+  background-color: #312433;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 button:hover {
-  background-color: #f0f0f0;
+  background-color: #462b4b;
 }
 .reset-button {
-  background-color: #f2dede;
-  border-color: #ebccd1;
-  color: #a94442;
+  background-color: #312433;
+  border-color: #A772A7;
+  color: #A772A7;
 }
 .reset-button:hover {
-  background-color: #e4b9b9;
+  background-color: #462b4b;
 }
 </style>

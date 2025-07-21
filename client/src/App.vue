@@ -16,21 +16,22 @@ import { RouterView } from 'vue-router'
 
 <style>
 #app-layout {
+  background-color: #382F3A;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 .app-header {
-  background-color: var(--cor-superficie);
+  background-color: #382f3a;
   padding: 1rem 2rem;
-  border-bottom: 1px solid var(--cor-borda);
+  border-bottom: 5px solid #a772a7;
   box-shadow: var(--sombra-suave);
 }
 
 .app-header h2 {
   margin: 0;
-  color: var(--cor-primaria);
+  color: rgb(161, 224, 182);
 }
 
 main {

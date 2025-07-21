@@ -26,23 +26,21 @@ defineProps({
   text-align: center;
   margin-bottom: 1rem;
   padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #eee;
+  background-color: #312433;
 }
 
 .game-name {
   pointer-events: none;
   margin: 0;
-  font-size: 1.5em;
-  color: #333;
+  font-size: 1.7em;
+  color: #D6B8DA;
 }
 
 .game-status {
   pointer-events: none;
   margin: 5px 0 0;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   font-weight: bold;
-  color: #555;
+  color: #D6B8DA;
 }
 </style>

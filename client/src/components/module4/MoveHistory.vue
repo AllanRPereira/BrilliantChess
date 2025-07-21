@@ -57,15 +57,16 @@ function selectMove(index) {
 <style scoped>
 /* O CSS da barra de avaliação foi removido */
 .analysis-panel {
-  width: 350px;
-  height: 500px;
+  color: #ebcaee;
+  width: 200px;
+  height: 100%;
   background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 5px;
 }
 /* Estilos da lista de lances (move-history-container, move-list, etc) permanecem */
 .move-history-container {
-  padding: 10px 15px;
+  background-color: #312433;
+  border-left: 1px dotted #ebcaee;
+  padding: 2px 3px;
   overflow-y: auto;
   height: 100%;
 }

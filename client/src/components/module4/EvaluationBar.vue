@@ -35,7 +35,7 @@ const whiteHeight = computed(() => {
   position: relative;
   width: 30px;
   height: 100%; /* Ocupa a altura do container pai */
-  background-color: #343a40;
+  background-color: #403D39;
   border-radius: 4px;
   overflow: hidden; /* Garante que a barra interna não ultrapasse a borda arredondada */
   transition: all 0.3s ease;
