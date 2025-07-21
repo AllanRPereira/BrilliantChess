@@ -7,6 +7,7 @@ import GameInfo from '../components/module4/GameInfo.vue';
 import MoveHistory from '../components/module4/MoveHistory.vue';
 import GameControls from '../components/module4/GameControls.vue';
 import { fetchGameById } from '@/services/apiService';
+import EvaluationBar from '@/components/module4/EvaluationBar.vue';
 
 // --- ESTADO ---
 const route = useRoute();
@@ -15,21 +16,20 @@ const activeMoveIndex = ref(-1);
 const boardAPI = ref(null); // A referência para a API do tabuleiro
 const isPgnLoaded = ref(false);
 
-// 2. Simplifique o boardConfig. Ele não precisa mais do evento 'create'.
+
 const boardConfig = {
-  movable: {
+  movable: { // Só movimentos legais 
     free: false,
   },
   coordinates: true,
 };
 
-// 3. O "Vigia" Inteligente: watchEffect
-// Este bloco de código vai rodar automaticamente quando 'partida' E 'boardAPI' tiverem valores.
+// Espera que o pgn seja carregado para comunicar com a API
 watchEffect(() => {
   const pgn = partida.value?.pgn;
   const api = boardAPI.value;
 
-  // Só executa se ambas as condições forem verdadeiras
+  // Indica se o pgn foi carregado com sucesso 
   if (pgn && api && !isPgnLoaded.value) {
     console.log("✅ Condições satisfeitas! Carregando PGN...");
     console.log("PGN a ser carregado:", pgn);
@@ -42,7 +42,7 @@ watchEffect(() => {
 
 // --- CICLO DE VIDA ---
 onMounted(async () => {
-  // A única responsabilidade do onMounted agora é buscar os dados.
+  // Busca os dados da partida 
   partida.value = await fetchGameById(route.params.id);
 });
 
@@ -54,7 +54,7 @@ const gameStatus = computed(() => {
   return `Vez de: ${boardAPI.value.getTurnColor() === 'w' ? 'Brancas' : 'Pretas'}`;
 });
 
-const currentEval = computed(() => {
+const currentEval = computed(() => { 
     if (!partida.value || activeMoveIndex.value < 0) return 0;
     return partida.value.analyzedMoves[activeMoveIndex.value].evalAfter;
 });
@@ -69,11 +69,12 @@ function handleNavigate(direction) {
     if (direction === 'last') boardAPI.value.viewHistory(partida.value.analyzedMoves.length);
     activeMoveIndex.value = boardAPI.value.getCurrentPlyNumber() - 1;
 }
-// ... suas outras funções (goToMove, resetGame, handleBoardMove) ...
+// Permite que va para uma move especifica 
 function goToMove(index) {
     boardAPI.value?.viewHistory(index + 1);
     activeMoveIndex.value = index;
 }
+// Volta para o comeco do jogo
 function resetGame() {
     boardAPI.value?.viewStart();
     activeMoveIndex.value = -1;
@@ -87,30 +88,69 @@ function handleBoardMove(move) {
   <div v-if="!partida" class="loading-container">
     <p>Carregando análise da partida...</p>
   </div>
-  <div v-else class="game-view-container">
-    <div class="game-layout">
-      <div class="main-column">
-        <GameInfo :nome="partida.nome" :status="gameStatus" />
-        
-        <TheChessboard 
-          :board-config="boardConfig"
-          @board-created="(api) => boardAPI = api" 
-          @move="handleBoardMove"
-        />
-        
+  <div v-else class="page-container">
+    <GameInfo :nome="partida.nome" :status="gameStatus" />
+    <div class="main-layout">
+      <div class="board-block">
+        <div class="board-area">
+          <TheChessboard 
+            :board-config="boardConfig"
+            @board-created="(api) => boardAPI = api" 
+            @move="handleBoardMove"
+          />
+          <EvaluationBar :evaluation="currentEval" />
+        </div>
         <GameControls @reset="resetGame" @navigate="handleNavigate" />
       </div>
-      <MoveHistory 
-          :analyzedMoves="partida.analyzedMoves"
-          :currentEvaluation="currentEval"
-          :activeMoveIndex="activeMoveIndex"
-          @select-move="goToMove"
+
+      <div class="sidebar-area">
+        <MoveHistory 
+      :analyzedMoves="partida.analyzedMoves"
+      :currentEvaluation="currentEval"
+      :activeMoveIndex="activeMoveIndex"
+      @select-move="goToMove"
       />
+      </div>
+
     </div>
   </div>
 </template>
 
-<style>
-.game-layout { display: flex; gap: 2rem; }
-.main-column { display: flex; flex-direction: column; gap: 1rem; }
+<style scoped>
+.page-container {
+  background-color: rgb(215, 228, 169);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 1rem;
+}
+
+.main-layout {
+  display: flex; 
+  flex-direction: row; 
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.board-block {
+  display:flex;
+  flex-direction: column;
+  gap: 1rem;
+
+}
+
+.board-area {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.sidebar-area {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 </style>

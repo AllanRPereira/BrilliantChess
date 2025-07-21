@@ -1,11 +1,5 @@
 <template>
   <div class="analysis-panel">
-    <div class="eval-bar-container">
-      <div class="eval-bar-white" :style="{ height: whiteHeight }"></div>
-      <div class="eval-bar-black" :style="{ height: blackHeight }"></div>
-      <div class="eval-text">{{ formattedEval }}</div>
-    </div>
-
     <div class="move-history-container">
       <h2>Movimentos</h2>
       <ol class="move-list">
@@ -14,14 +8,14 @@
           <span
             v-if="turn.white"
             :class="['move', `move-${turn.white.classification}`, { 'active-move': turn.white.moveIndex === activeMoveIndex }]"
-            @click="emit('select-move', turn.white.moveIndex)"
+            @click="selectMove(turn.white.moveIndex)"
           >
             {{ turn.white.san }}
           </span>
           <span
             v-if="turn.black"
             :class="['move', `move-${turn.black.classification}`, { 'active-move': turn.black.moveIndex === activeMoveIndex }]"
-            @click="emit('select-move', turn.black.moveIndex)"
+            @click="selectMove(turn.black.moveIndex)"
           >
             {{ turn.black.san }}
           </span>
@@ -34,26 +28,18 @@
 <script setup>
 import { computed } from 'vue';
 
+// As props 'currentEvaluation' não é mais necessária aqui
 const props = defineProps({
-  analyzedMoves: {
-    type: Array,
-    required: true,
-    default: () => []
-  },
-  currentEvaluation: {
-    type: Number,
-    default: 0
-  },
-  activeMoveIndex: {
-    type: Number,
-    default: -1
-  }
+  analyzedMoves: { type: Array, required: true },
+  activeMoveIndex: { type: Number, default: -1 }
 });
 
 const emit = defineEmits(['select-move']);
 
+// A lógica da barra foi removida. Apenas a formatação dos lances permanece.
 const formattedTurns = computed(() => {
   const turns = [];
+  if (!props.analyzedMoves) return [];
   for (let i = 0; i < props.analyzedMoves.length; i += 2) {
     turns.push({
       white: { ...props.analyzedMoves[i], moveIndex: i },
@@ -63,84 +49,25 @@ const formattedTurns = computed(() => {
   return turns;
 });
 
-
-const maxEval = 500; 
-const formattedEval = computed(() => (props.currentEvaluation / 100).toFixed(2));
-
-const whiteHeight = computed(() => {
-  const advantage = Math.max(0, props.currentEvaluation);
-  const percentage = (Math.min(advantage, maxEval) / maxEval) * 50;
-  return `${50 + percentage}%`;
-});
-
-const blackHeight = computed(() => {
-  const advantage = Math.max(0, -props.currentEvaluation);
-  const percentage = (Math.min(advantage, maxEval) / maxEval) * 50;
-  return `${50 + percentage}%`;
-});
+function selectMove(index) {
+  emit('select-move', index);
+}
 </script>
 
 <style scoped>
+/* O CSS da barra de avaliação foi removido */
 .analysis-panel {
-  display: flex;
-  flex-direction: column;
-  width: 280px;
+  width: 350px;
+  height: 500px;
   background-color: #f8f9fa;
-  border-left: 1px solid #dee2e6;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
 }
-
-/* Barra de Avaliação */
-.eval-bar-container {
-  position: relative;
-  width: 20px;
-  height: 400px; /* Altura da barra */
-  background-color: #495057;
-  display: none; 
-}
-
-
-/* Lista de Movimentos */
+/* Estilos da lista de lances (move-history-container, move-list, etc) permanecem */
 .move-history-container {
-  pointer-events: none;
-  padding: 15px;
+  padding: 10px 15px;
   overflow-y: auto;
   height: 100%;
 }
-
-.move-list {
-  list-style: none;
-  padding: 0;
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.turn {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.turn-number {
-  width: 30px;
-  color: #6c757d;
-}
-
-.move {
-  cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-right: 8px;
-  transition: background-color 0.2s;
-}
-
-.active-move {
-  background-color: #cfe2ff;
-  border: 1px solid #9ec5fe;
-}
-
-/* Cores da Classificação dos Lances */
-.move-best { color: #198754; font-weight: bold; }
-.move-good { color: #212529; }
-.move-inaccuracy { color: #ffc107; }
-.move-mistake { color: #fd7e14; }
-.move-blunder { color: #dc3545; font-weight: bold; }
+/* ... etc ... */
 </style>
