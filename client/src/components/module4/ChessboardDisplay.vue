@@ -1,8 +1,8 @@
 <template>
   <div class="board-wrapper">
     <TheChessboard
-      :fen="fen"
       :board-config="boardConfig"
+      @board-created="onBoardCreated"
       @move="onMove"
     />
   </div>
@@ -12,32 +12,27 @@
 import { TheChessboard } from 'vue3-chessboard';
 import 'vue3-chessboard/style.css';
 
-// As props que o nosso componente vai aceitar do pai (Module4View)
-defineProps({
-  fen: {
-    type: String,
-    required: true
-  },
-  lastMove: {
-    type: Array,
-    required: false
-  }
-});
 
-const emit = defineEmits(['move']);
+const emit = defineEmits(['move', 'board-created']);
 
 const boardConfig = {
     coordinates: true,
-  movable: {
-    free: false // O jogador só pode mover as peças da vez
-  }
+    movable: {
+        free: false // O jogador só pode fazer movimento legais 
+    },
+    premovable: {
+        enabled: false, 
+    }
 };
 
-// Quando um movimento é feito no tabuleiro, esta função é chamada.
+// Transmite o movimento feito no tabuleiro 
 function onMove(moveData) {
-  // Apenas retransmite o evento 'move' para o componente pai.
-  // A biblioteca já valida se o movimento é legal.
   emit('move', moveData);
+}
+
+function onBoardCreated(api) {
+    console.log("api criada com sucesso");
+    emit('board-created', api);
 }
 </script>
 
@@ -45,5 +40,6 @@ function onMove(moveData) {
 .board-wrapper {
   width: 800px;
   max-width: 100%;
+  margin: 5px;
 }
 </style>
