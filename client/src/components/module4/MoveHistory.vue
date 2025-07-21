@@ -35,18 +35,15 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  // Recebe a lista completa de movimentos analisados
   analyzedMoves: {
     type: Array,
     required: true,
     default: () => []
   },
-  // Recebe a avaliação da posição ATUAL em centipawns
   currentEvaluation: {
     type: Number,
     default: 0
   },
-  // Recebe o índice do lance que está sendo exibido no tabuleiro
   activeMoveIndex: {
     type: Number,
     default: -1
@@ -55,7 +52,6 @@ const props = defineProps({
 
 const emit = defineEmits(['select-move']);
 
-// Formata os movimentos em pares (Brancas/Pretas) para exibição
 const formattedTurns = computed(() => {
   const turns = [];
   for (let i = 0; i < props.analyzedMoves.length; i += 2) {
@@ -67,8 +63,8 @@ const formattedTurns = computed(() => {
   return turns;
 });
 
-// Lógica da Barra de Avaliação
-const maxEval = 500; // Define um teto de 5.0 (+5.00) para a barra não ficar extrema
+
+const maxEval = 500; 
 const formattedEval = computed(() => (props.currentEvaluation / 100).toFixed(2));
 
 const whiteHeight = computed(() => {
@@ -99,12 +95,13 @@ const blackHeight = computed(() => {
   width: 20px;
   height: 400px; /* Altura da barra */
   background-color: #495057;
-  display: none; /* Descomente se quiser a barra ao lado */
+  display: none; 
 }
-/* ... estilos para .eval-bar-white, .eval-bar-black, .eval-text ... */
+
 
 /* Lista de Movimentos */
 .move-history-container {
+  pointer-events: none;
   padding: 15px;
   overflow-y: auto;
   height: 100%;

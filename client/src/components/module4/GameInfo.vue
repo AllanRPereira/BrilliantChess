@@ -22,6 +22,7 @@ defineProps({
 
 <style scoped>
 .game-info {
+  pointer-events: none;
   text-align: center;
   margin-bottom: 1rem;
   padding: 10px;
@@ -31,12 +32,14 @@ defineProps({
 }
 
 .game-name {
+  pointer-events: none;
   margin: 0;
   font-size: 1.5em;
   color: #333;
 }
 
 .game-status {
+  pointer-events: none;
   margin: 5px 0 0;
   font-size: 1.1em;
   font-weight: bold;
